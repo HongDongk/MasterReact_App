@@ -28,6 +28,18 @@ const Header = styled.header`
   justify-content: center;
   align-items: center;
 `;
+const Button = styled.button<{ isActive: boolean }>`
+  text-align: center;
+  font-size: 12px;
+  font-weight: 400;
+  background-color: rgba(0, 0, 0, 0.5);
+  padding: 7px 0px;
+  border-radius: 10px;
+  margin-bottom: 15px;
+  margin-left: 380px;
+  color: ${(props) =>props.isActive ? props.theme.accentColor : props.theme.textColor};
+`;
+
 const Overview = styled.div`
   display: flex;
   justify-content: space-between;
@@ -66,8 +78,7 @@ const Tab = styled.span<{ isActive: boolean }>`
   background-color: rgba(0, 0, 0, 0.5);
   padding: 7px 0px;
   border-radius: 10px;
-  color: ${(props) =>
-    props.isActive ? props.theme.accentColor : props.theme.textColor};
+  color: ${(props) =>props.isActive ? props.theme.accentColor : props.theme.textColor};
   a {
     padding: 7px 0px;
     display: block;
@@ -152,10 +163,13 @@ function Coin() {
         </title>
       </Helmet>
       <Header>
-      <Title>
+        <Title>
           {state?.name ? state.name : loading ? "Loading..." : infoData?.name}
-      </Title>
+        </Title>
       </Header>
+      <Button isActive={false}>
+        <Link to={"/"}>돌아가기</Link>
+      </Button>
       {loading ? (
         <Loader>Loading...</Loader>
       ) : (
@@ -196,10 +210,10 @@ function Coin() {
           </Tabs>
 
           <Switch>
-            <Route path={`/:coinId/price`}>
+            <Route path="/:coinId/price">
               <Price />
             </Route>
-            <Route path={`/:coinId/chart`}>
+            <Route path="/:coinId/chart">
               <Chart coinId={coinId} /> 
             </Route>
           </Switch>
